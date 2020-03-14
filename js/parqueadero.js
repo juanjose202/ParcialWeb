@@ -1,57 +1,57 @@
 
 let vehiculos = [
     {
-        placa: "DST-602",
+        placa: "A",
         color: "GRIS",
         marca: "RENAULT",
         ciudad: "Medellin",
         tipo: "003",
-        dia: "",
+        dia: "2001-08-19",
         hora: "",
-        fecha: ""
+        
     }
 ]
 let vehiculoTemporal = null
 
 function obtenerValores() {
-    let placaobtenida = document.getElementById("placa").value + ""
-    let placa = placaobtenida.toUpperCase()
+    let placa= document.getElementById("placa").value.toUpperCase()
     let color = document.getElementById("color").value
     let marca = document.getElementById("marca").value
     let ciudad = document.getElementById("ciudad").value
     let tipo = document.getElementById("tipo").value
+    let dia = document.getElementById("fecha").value
+    let hora = document.getElementById("hora").value
 
-    var fecha = new Date()
-    var dianumero = fecha.getDate()
-    var mes = fecha.getMonth()
-    var anio = fecha.getFullYear()
-    var horanumero = fecha.getHours()
-    var minutos = fecha.getMinutes()
-    var segundos = fecha.getSeconds()
+    
 
-    let dia = (dianumero + "/" + mes + "/" + anio)
-    let hora = (horanumero + ":" + minutos + ":" + segundos)
-
-
-    let miVehiculo = { placa, color, marca, ciudad, tipo, dia, hora, fecha }
+    let miVehiculo = { placa, color, marca, ciudad, tipo, dia, hora}
     return miVehiculo
 }
+
+
 
 
 function crearVehiculo() {
     let vehiculo = obtenerValores()
     let existevehiculo = vehiculos.find(x => vehiculos.placa === x.placa)
+    console.log(existevehiculo)
+    console.log(vehiculo.placa)
+
     if (existevehiculo) {
         console.log('El vehiculo ya esta Ingresado');
         return;
+
+    } else {
+
+        vehiculos.push(vehiculo)
+        listarVehiculos()
     }
 
-    vehiculos.push(vehiculo)
-    listarVehiculos()
+
 }
 
 function listarVehiculos() {
-    let lista = document.getElementById("listavehiculos")
+    let lista = document.getElementById("listaVehiculos")
     let data = ""
     for (let i = 0; i < vehiculos.length; i++) {
         let miVehiculo = vehiculos[i];
@@ -59,6 +59,7 @@ function listarVehiculos() {
         data += `<td>${miVehiculo.placa}</td>`
         data += `<td>${miVehiculo.tipo} </td>`
         data += `<td>${miVehiculo.marca} </td>`
+        data += `<td>${miVehiculo.color} </td>`
         data += `<td>${miVehiculo.ciudad} </td>`
         data += `<td>${miVehiculo.dia} </td>`
         data += `<td>${miVehiculo.hora} </td>`
@@ -69,7 +70,7 @@ function listarVehiculos() {
     }
     lista.innerHTML = data;
 }
-function darsalida(i){
+function darsalida(i) {
 
 }
 
@@ -82,14 +83,18 @@ function cargarInformacion(index) {
     let vehiculo = vehiculos[index]
     vehiculoTemporal = index
     document.getElementById("placa").value = vehiculo.placa
-    document.getElementById("color").value = estudiante.color
+    document.getElementById("color").value = vehiculo.color
     document.getElementById("tipo").value = vehiculo.tipo
     document.getElementById("marca").value = vehiculo.marca
     document.getElementById("ciudad").value = vehiculo.ciudad
+    document.getElementById("fecha").value = vehiculo.dia
+    document.getElementById("hora").value = vehiculo.hora
 
     document.getElementById("btnEntradaVehiculo").style.display = "none"
     document.getElementById("btnEditarVehiculo").style.display = "inline"
 }
+
+
 
 
 function limpiarFormulario() {
@@ -99,18 +104,25 @@ function limpiarFormulario() {
     document.getElementById("marca").value = ""
     document.getElementById("ciudad").value = ""
     document.getElementById("tipo").value = ""
+    document.getElementById("fecha").value = ""
+    document.getElementById("hora").value = ""
+
     document.getElementById("btnEntradaVehiculo").style.display = "inline"
     document.getElementById("btnEditarVehiculo").style.display = "none"
 
-    function actualizarVehiculo() {
-        let vehiculoactualizado = obtenerValores()
-        vehiculos.splice(vehiculoTemporal, 1, vehiculoactualizado)
-        limpiarFormulario()
-        listarVehiculos()
-    }
 
 
-
-    // Llamado a la función
     listarVehiculos()
 }
+
+function actualizarVehiculo() {
+    let vehiculoactualizado = obtenerValores()
+    vehiculos.splice(vehiculoTemporal, 1, vehiculoactualizado)
+    limpiarFormulario()
+    listarVehiculos()
+
+    console.log(vehiculoactualizado)
+}
+
+
+listarVehiculos()
