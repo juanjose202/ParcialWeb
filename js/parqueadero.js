@@ -1,7 +1,7 @@
 
 let vehiculos = [
     {
-        placa: "A",
+        placa: "DST-602",
         color: "GRIS",
         marca: "RENAULT",
         ciudad: "Medellin",
@@ -33,7 +33,7 @@ function obtenerValores() {
 
 function crearVehiculo() {
     let vehiculo = obtenerValores()
-    let existevehiculo = vehiculos.find(x => vehiculos.placa === x.placa)
+    let existevehiculo = vehiculos.find(x => vehiculo.placa === x.placa)
     console.log(existevehiculo)
     console.log(vehiculo.placa)
 
@@ -47,6 +47,7 @@ function crearVehiculo() {
         listarVehiculos()
     }
 
+    limpiarFormulario()
 
 }
 
@@ -71,6 +72,17 @@ function listarVehiculos() {
     lista.innerHTML = data;
 }
 function darsalida(i) {
+
+    
+
+    let fechaingreso = new Date(vehiculos[i].dia);
+    let fechaSalida = new Date()
+
+    let resta = fechaSalida.getTime() - fechaingreso.getTime()
+    let cantidaddedias=Math.round(resta/ (1000*60*60*24))-1
+    console.log(cantidaddedias)
+
+
 
 }
 
