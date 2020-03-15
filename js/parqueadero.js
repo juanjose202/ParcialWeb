@@ -5,16 +5,16 @@ let vehiculos = [
         color: "GRIS",
         marca: "RENAULT",
         ciudad: "Medellin",
-        tipo: "003",
-        dia: "2001-08-19",
-        hora: "",
-        
+        tipo: "CARRO",
+        dia: "2020-03-14",
+        hora: "18:00",
+
     }
 ]
 let vehiculoTemporal = null
 
 function obtenerValores() {
-    let placa= document.getElementById("placa").value.toUpperCase()
+    let placa = document.getElementById("placa").value.toUpperCase()
     let color = document.getElementById("color").value
     let marca = document.getElementById("marca").value
     let ciudad = document.getElementById("ciudad").value
@@ -22,13 +22,11 @@ function obtenerValores() {
     let dia = document.getElementById("fecha").value
     let hora = document.getElementById("hora").value
 
-    
 
-    let miVehiculo = { placa, color, marca, ciudad, tipo, dia, hora}
+
+    let miVehiculo = { placa, color, marca, ciudad, tipo, dia, hora }
     return miVehiculo
 }
-
-
 
 
 function crearVehiculo() {
@@ -73,16 +71,38 @@ function listarVehiculos() {
 }
 function darsalida(i) {
 
-    
-
-    let fechaingreso = new Date(vehiculos[i].dia);
     let fechaSalida = new Date()
+    let fechaingreso=(vehiculos[i].dia+" "+vehiculos[i].hora)
+    let fecha1 = moment(fechaingreso, "YYYY-MM-DD HH:mm:ss");
+    let fecha2 = moment(fechaSalida, "YYYY-MM-DD HH:mm:ss");
+    let diffminutes = fecha2.diff(fecha1, 'minutes'); // obtengo la diferencia de minutos entre 2 fechas dia/mes/año hora:minutos
+    let horas = Math.ceil(diffminutes/60) 
+    
+    let valor=0;
+    let tipo=vehiculos[i].tipo.toUpperCase()
 
-    let resta = fechaSalida.getTime() - fechaingreso.getTime()
-    let cantidaddedias=Math.round(resta/ (1000*60*60*24))-1
-    console.log(cantidaddedias)
+    if(tipo==="CARRO"){
+        valor=8000
+        console.log("es un CARRO",valor)
+    }
+    if(tipo==="MOTO"){
+        valor=4000
+        console.log("es una MOTO ",valor)
+    }
+    if(tipo==="CAMION"){
+        valor=21000
+        console.log("es un CAMION",valor)
+    }
+    if(tipo==="BICICLETA"){
+        valor=2000
+        console.log("es una BICICLETA",valor)
+    }
 
+    let valorPagar=horas*valor
+    window.alert("Este vehiculo debe pagar: "+valorPagar+" pesos");
 
+    eliminarVehiculo(i)
+    
 
 }
 
