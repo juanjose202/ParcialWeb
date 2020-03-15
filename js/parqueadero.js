@@ -1,16 +1,5 @@
 
-let vehiculos = [
-    {
-        placa: "DST-602",
-        color: "GRIS",
-        marca: "RENAULT",
-        ciudad: "Medellin",
-        tipo: "CARRO",
-        dia: "2020-03-14",
-        hora: "18:00",
-
-    }
-]
+let vehiculos = []
 let vehiculoTemporal = null
 
 function obtenerValores() {
@@ -44,14 +33,28 @@ function crearVehiculo() {
 
         vehiculos.push(vehiculo)
         listarVehiculos()
+        addlocalstorage(vehiculos)
         
-
     }
 
     limpiarFormulario()
 
     
     
+}
+
+function addlocalstorage(lista1){
+    localStorage.setItem("datos",JSON.stringify(lista1))
+}
+function getlocalstorage(){
+    let objeto=JSON.parse(localStorage.getItem("datos"))
+
+    if(objeto==null){
+        vehiculos=[]
+    }else{
+        vehiculos=objeto
+        listarVehiculos()
+    }
 }
 
 
@@ -69,7 +72,7 @@ function listarVehiculos() {
         data += `<td>${miVehiculo.ciudad} </td>`
         data += `<td>${miVehiculo.dia} </td>`
         data += `<td>${miVehiculo.hora} </td>`
-        data += `<td><button type="button" onclick="cargarInformacion(${i})" class="btn btn-primary btn-sm">Editar</button> </td>`
+        data += `<td><button type="button" onclick="cargarInformacion(${i},${miVehiculo.placa})" class="btn btn-primary btn-sm">Editar</button> </td>`
         data += '<td><button type="button" onclick="eliminarVehiculo(' + i + ')" class="btn btn-primary btn-sm">Eliminar</button> </td>'
         data += `<td><button type="button" onclick="darsalida(${i})" class="btn btn-primary btn-sm">Dar salida</button> </td>`
         data += "</tr>"
@@ -116,6 +119,7 @@ function darsalida(i) {
 
 function eliminarVehiculo(index) {
     vehiculos.splice(index, 1)
+    addlocalstorage(vehiculos)
     listarVehiculos()
     
 }
@@ -157,14 +161,27 @@ function limpiarFormulario() {
 }
 
 function actualizarVehiculo() {
-    let vehiculoactualizado = obtenerValores()
-    vehiculos.splice(vehiculoTemporal, 1, vehiculoactualizado)
-    limpiarFormulario()
-    listarVehiculos()
+    
+    let vehiculo = obtenerValores()
+    let placa=vehiculo.placa
+    let existevehiculo = vehiculos.find(x => vehiculo.placa === x.placa)
 
+
+    if(existevehiculo){
+
+        window.alert("la placa de este vehiculo ya esta ingresada, no se puede repetir");
+    }else{
+        let vehiculoactualizado = obtenerValores()
+        vehiculos.splice(vehiculoTemporal, 1, vehiculoactualizado)
+        addlocalstorage(vehiculos)
+        listarVehiculos()
+        limpiarFormulario()
+    }
+        
     
 }
 
-listarVehiculos()
+getlocalstorage()
+
 
 
