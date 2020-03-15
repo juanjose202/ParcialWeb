@@ -36,6 +36,7 @@ function crearVehiculo() {
     console.log(vehiculo.placa)
 
     if (existevehiculo) {
+        window.alert('El vehiculo ya esta Ingresado');
         console.log('El vehiculo ya esta Ingresado');
         return;
 
@@ -43,13 +44,19 @@ function crearVehiculo() {
 
         vehiculos.push(vehiculo)
         listarVehiculos()
+        
+
     }
 
     limpiarFormulario()
 
+    
+    
 }
 
+
 function listarVehiculos() {
+    
     let lista = document.getElementById("listaVehiculos")
     let data = ""
     for (let i = 0; i < vehiculos.length; i++) {
@@ -68,6 +75,7 @@ function listarVehiculos() {
         data += "</tr>"
     }
     lista.innerHTML = data;
+    
 }
 function darsalida(i) {
 
@@ -99,7 +107,7 @@ function darsalida(i) {
     }
 
     let valorPagar=horas*valor
-    window.alert("Este vehiculo debe pagar: "+valorPagar+" pesos");
+    window.alert("la fraccion de hora se toma como hora completa,Este vehiculo estuvo: "+horas+" horas y debe pagar: "+valorPagar+" pesos");
 
     eliminarVehiculo(i)
     
@@ -109,6 +117,7 @@ function darsalida(i) {
 function eliminarVehiculo(index) {
     vehiculos.splice(index, 1)
     listarVehiculos()
+    
 }
 
 function cargarInformacion(index) {
@@ -153,8 +162,9 @@ function actualizarVehiculo() {
     limpiarFormulario()
     listarVehiculos()
 
-    console.log(vehiculoactualizado)
+    
 }
 
-
 listarVehiculos()
+
+
