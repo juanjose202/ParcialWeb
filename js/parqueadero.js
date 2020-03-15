@@ -171,7 +171,8 @@ function actualizarVehiculo() {
 
     if(existevehiculo && placaglobal!=vehiculo.placa){
         window.alert("la placa de este vehiculo ya esta ingresada, no se puede repetir");
-    }else if(placaglobal==vehiculo.placa){
+
+    }else {
         let vehiculoactualizado = obtenerValores()
         vehiculos.splice(vehiculoTemporal, 1, vehiculoactualizado)
         addlocalstorage(vehiculos)
