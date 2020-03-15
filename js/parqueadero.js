@@ -1,6 +1,7 @@
 
 let vehiculos = []
 let vehiculoTemporal = null
+let placaglobal=""
 
 function obtenerValores() {
     let placa = document.getElementById("placa").value.toUpperCase()
@@ -72,7 +73,7 @@ function listarVehiculos() {
         data += `<td>${miVehiculo.ciudad} </td>`
         data += `<td>${miVehiculo.dia} </td>`
         data += `<td>${miVehiculo.hora} </td>`
-        data += `<td><button type="button" onclick="cargarInformacion(${i},${miVehiculo.placa})" class="btn btn-primary btn-sm">Editar</button> </td>`
+        data += `<td><button type="button" onclick="cargarInformacion(${i})" class="btn btn-primary btn-sm">Editar</button> </td>`
         data += '<td><button type="button" onclick="eliminarVehiculo(' + i + ')" class="btn btn-primary btn-sm">Eliminar</button> </td>'
         data += `<td><button type="button" onclick="darsalida(${i})" class="btn btn-primary btn-sm">Dar salida</button> </td>`
         data += "</tr>"
@@ -134,9 +135,11 @@ function cargarInformacion(index) {
     document.getElementById("ciudad").value = vehiculo.ciudad
     document.getElementById("fecha").value = vehiculo.dia
     document.getElementById("hora").value = vehiculo.hora
-
     document.getElementById("btnEntradaVehiculo").style.display = "none"
     document.getElementById("btnEditarVehiculo").style.display = "inline"
+
+    placaglobal=vehiculo.placa+""
+    console.log(placaglobal)
 }
 
 
@@ -163,14 +166,12 @@ function limpiarFormulario() {
 function actualizarVehiculo() {
     
     let vehiculo = obtenerValores()
-    let placa=vehiculo.placa
     let existevehiculo = vehiculos.find(x => vehiculo.placa === x.placa)
 
 
-    if(existevehiculo){
-
+    if(existevehiculo && placaglobal!=vehiculo.placa){
         window.alert("la placa de este vehiculo ya esta ingresada, no se puede repetir");
-    }else{
+    }else if(placaglobal==vehiculo.placa){
         let vehiculoactualizado = obtenerValores()
         vehiculos.splice(vehiculoTemporal, 1, vehiculoactualizado)
         addlocalstorage(vehiculos)
